@@ -26,7 +26,7 @@ desc 'Generate Documentation'
 rd = Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'doc'
   rdoc.title = "RExchange -- A simple wrapper around Microsoft Exchange Server's WebDAV API"
-  rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README'
+  rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README.rdoc'
   rdoc.rdoc_files.include(PACKAGE_FILES)
 end
 
@@ -50,7 +50,7 @@ gem_spec = Gem::Specification.new do |s|
   s.autorequire = 'rexchange'
   
   s.has_rdoc = true
-  s.rdoc_options << '--line-numbers' << '--inline-source' << '--main' << 'README'
+  s.rdoc_options << '--line-numbers' << '--inline-source' << '--main' << 'README.rdoc'
   s.extra_rdoc_files = rd.rdoc_files.reject { |fn| fn =~ /\.rb$/ }.to_a
 end
 

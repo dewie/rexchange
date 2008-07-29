@@ -2,6 +2,9 @@ require 'rexml/document'
 require 'ostruct'
 require 'rexchange/dav_move_request'
 require 'time'
+require 'rubygems'
+require 'xml'
+
 
 module RExchange
   
@@ -10,7 +13,7 @@ module RExchange
   end
   
   class GenericItem
-    include REXML
+    # include REXML
     include Enumerable
 
     attr_accessor :attributes
@@ -19,15 +22,15 @@ module RExchange
       @attributes = {}
       @session = session
 
-      dav_property_node.elements.each do |element|
-        namespaced_name = element.namespace + element.name
+      dav_property_node.children.each do |element|
+        namespaced_name = element.namespace_node.href + element.name
         
         if element.name =~ /date$/i || self.class::ATTRIBUTE_MAPPINGS.find { |k,v| v == namespaced_name && k.to_s =~ /\_(at|on)$/ }
-           @attributes[namespaced_name] = DateTime::parse(element.text) rescue element.text
+           @attributes[namespaced_name] = DateTime::parse(element.content) rescue element.content
         elsif element.name == 'keywords-utf8'
-           @attributes[namespaced_name] = element.to_a.collect! { |x| x.text } rescue nil          
+           @attributes[namespaced_name] = element.to_a.collect! { |x| x.content } rescue nil          
         else
-           @attributes[namespaced_name] = element.text
+           @attributes[namespaced_name] = element.content
         end
       end
     end
@@ -118,11 +121,12 @@ module RExchange
       items = []
       xpath_query = "//a:propstat[a:status/text() = 'HTTP/1.1 200 OK']/a:prop"
 
-      Document.new(response.body).elements.each(xpath_query) do |m|
-        items << self.new(credentials, m)
+      XML::Parser.string(response.body).parse.find(xpath_query).each do |node|
+         items << self.new(credentials, node)        
       end
-
+      
       items
+      
     end
   end
 end

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.date = %q{2008-07-28}
   s.description = %q{An easy to use communication wrapper for Microsoft Eschange Server WebDAV}
   s.email = %q{mlussier (at) gmail (dot) com}
-  s.extra_rdoc_files = ["CHANGELOG", "MIT-LICENSE", "README"]
+  s.extra_rdoc_files = ["CHANGELOG", "MIT-LICENSE", "README.rdoc"]
   s.files = ["CHANGELOG", "MIT-LICENSE", "RAKEFILE", "README.rdoc", "lib/**/*.rb", "rexchange.gemspec"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/intabulas/rexchange}
