@@ -1,8 +1,13 @@
 = RExchange
 
-*July 28th 2008 - This is a fork of the stagnant rubyforge project. For historical see http://rubyforge.org/projects/rexchange/*
+July 28th 2008 - This is a fork of the stagnant rubyforge project. For historical see http://rubyforge.org/projects/rexchange/
 
 RExchange is a pure ruby wrapper for the Microsoft Exchange Server WebDAV API
+
+
+== Installation
+
+sudo gem install intabulas-rexchange -s http://gems.github.com
 
 == Things you should know
 
