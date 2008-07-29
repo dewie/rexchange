@@ -1,4 +1,3 @@
-require 'rexml/document'
 require 'net/https'
 require 'rexchange/dav_search_request'
 require 'rexchange/message'
@@ -14,8 +13,7 @@ module RExchange
   end
   
   class Folder
-    include REXML
-    
+   
     attr_reader :credentails, :name
     
     def initialize(credentials, parent, name, content_type)
@@ -69,12 +67,12 @@ module RExchange
         # iterate through folders query and add a new Folder
         # object for each, under a normalized name.
         xpath_query = "//a:propstat[a:status/text() = 'HTTP/1.1 200 OK']/a:prop"
-        Document.new(response.body).elements.each(xpath_query) do |m|
-          displayname = m.elements['a:displayname'].text
-          contentclass = m.elements['a:contentclass'].text
-          folders[displayname.normalize] = Folder.new(@credentials, self, displayname, contentclass.split(':').last.sub(/folder$/, ''))
+        XML::Parser.string(response.body).parse.find(xpath_query).each do |m|
+          displayname = m.find_first('a:displayname').content
+          contentclass = m.find_first('a:contentclass').content
+          folders[displayname.normalize] = Folder.new(@credentials, self, displayname, contentclass.split(':').last.sub(/folder$/, ''))          
         end
-
+        
         folders
       end
     end

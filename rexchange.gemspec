@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.2.0}
   s.summary = %q{An easy to use communication wrapper for Microsoft Eschange Server WebDAV}
   s.test_files = ["test/functional.rb"]
+  s.add_dependency "libxml-ruby", ">= 0.8.3"
  
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

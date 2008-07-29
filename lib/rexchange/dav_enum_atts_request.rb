@@ -20,10 +20,10 @@ module RExchange
       attachment_xpath = "//a:response"
       properties_xpath = "//a:propstat[a:status/text() = 'HTTP/1.1 200 OK']/a:prop"
 
-      REXML::Document.new(response.body).elements.each(attachment_xpath) do |m|
-        a = Attachment.new(credentials, m.elements[properties_xpath])
-        a.href = m.elements["a:href"].text
-        items << a
+      XML::Parser.string(response.body).parse.find(attachment_xpath).each do |m|
+        a = Attachment.new(credentials, m.find_first(properties_xpath))
+        a.href = m.find_first("a:href").content
+        items << a        
       end
 
       items

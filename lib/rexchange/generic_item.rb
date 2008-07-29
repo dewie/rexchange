@@ -1,4 +1,3 @@
-require 'rexml/document'
 require 'ostruct'
 require 'rexchange/dav_move_request'
 require 'time'
@@ -13,7 +12,6 @@ module RExchange
   end
   
   class GenericItem
-    # include REXML
     include Enumerable
 
     attr_accessor :attributes
