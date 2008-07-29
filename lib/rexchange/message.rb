@@ -1,4 +1,6 @@
 require 'rexchange/generic_item'
+require 'rexchange/dav_enum_atts_request'
+require 'rexchange/dav_delete_request'
 
 module RExchange
   class Message < GenericItem
@@ -33,7 +35,15 @@ module RExchange
       DavMoveRequest.execute(@session, source, destination)
     end
     
+
+    def attachments
+      DavEnumAttsRequest.execute(@session, self.href)
+    end
     
+    def delete
+      DavDeleteRequest.execute(@session, self.href)
+    end
+            
     def to_s
       "To: #{to}, From: #{from}, Subject: #{subject}"
     end
