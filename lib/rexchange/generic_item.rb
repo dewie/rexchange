@@ -23,9 +23,11 @@ module RExchange
         namespaced_name = element.namespace + element.name
         
         if element.name =~ /date$/i || self.class::ATTRIBUTE_MAPPINGS.find { |k,v| v == namespaced_name && k.to_s =~ /\_(at|on)$/ }
-          @attributes[namespaced_name] = Time::parse(element.text) rescue element.text
+           @attributes[namespaced_name] = Time::parse(element.text) rescue element.text
+        elsif element.name == 'keywords-utf8'
+           @attributes[namespaced_name] = element.to_a.collect! { |x| x.text } rescue nil          
         else
-          @attributes[namespaced_name] = element.text
+           @attributes[namespaced_name] = element.text
         end
       end
     end
@@ -82,7 +84,8 @@ module RExchange
       
       mappings.merge! :uid => 'DAV:uid',
         :modified_at => 'DAV:getlastmodified',
-        :href => 'DAV:href'
+        :href => 'DAV:href',
+        :categories =>'http://schemas.microsoft.com/exchange/keywords-utf8'        
       
       const_set('ATTRIBUTE_MAPPINGS', mappings)
 
