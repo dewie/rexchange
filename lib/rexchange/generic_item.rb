@@ -23,7 +23,7 @@ module RExchange
         namespaced_name = element.namespace + element.name
         
         if element.name =~ /date$/i || self.class::ATTRIBUTE_MAPPINGS.find { |k,v| v == namespaced_name && k.to_s =~ /\_(at|on)$/ }
-           @attributes[namespaced_name] = Time::parse(element.text) rescue element.text
+           @attributes[namespaced_name] = DateTime::parse(element.text) rescue element.text
         elsif element.name == 'keywords-utf8'
            @attributes[namespaced_name] = element.to_a.collect! { |x| x.text } rescue nil          
         else
